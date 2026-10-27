@@ -1,0 +1,15 @@
+* text=auto
+
+# Windows 批处理必须保持 CRLF
+*.bat text eol=crlf
+
+# 二进制资源
+*.ico binary
+*.exe binary
+*.png binary
+
+# C# / 清单 / 文本
+*.cs text
+*.manifest text
+*.md text
+*.txt text
