@@ -23,7 +23,7 @@
 
 ## 使用
 
-1. 下载 `CdCleaner.exe`（见 Releases 页面）
+1. **[⬇ 下载最新版 CdCleaner.exe](https://github.com/gtanchen-prog/cd-cleaner/releases/latest)**（约 62 KB）
 2. 双击运行，UAC 提示点"是"获得完整清理权限
 3. 勾选清理项目 → 扫描大小 → 开始清理
 
@@ -32,14 +32,14 @@
 ## 目录结构
 
 ```
-CdCleaner.cs        主程序源码（C# 5 / WinForms）
 使用说明.txt         用户手册
 启动清理助手.bat     启动器（纯 ASCII）
-src/CdCleaner.cs    主程序源码
+build.bat           一键重新编译
+README.md           本文件
+src/CdCleaner.cs    主程序源码（C# 5 / WinForms）
 src/app.manifest    应用清单（DPI 感知、asInvoker）
 src/app.ico         图标
 src/CdCleaner_v1.0.ps1  旧版 PowerShell 脚本（备份）
-build.bat           一键重新编译
 ```
 
 ## 重新编译
@@ -58,6 +58,29 @@ csc /target:winexe /optimize+ /codepage:65001 /win32icon:src\app.ico /win32manif
 | Prefetch、更新下载缓存、WER、转储 | 书签、历史记录、保存的密码 |
 | 缩略图/图标缓存、D3D 缓存、应用缓存 | 文档/桌面/下载/图片等个人资料 |
 | 各盘 Temp、回收站（需单独确认） | 系统文件、页面文件、休眠文件、系统还原点、WinSxS |
+
+## 常见问题
+
+**Windows 提示 "Windows 已保护你的电脑"（SmartScreen）？**
+
+程序未做代码签名，首次运行会被 SmartScreen 拦截：点「更多信息」→「仍要运行」即可。
+这是所有个人开发程序的常态，不是文件本身有问题。如需校验，Release 附件 `CdCleaner.exe` 约 62 KB 且提供 SHA-256 摘要。
+
+**杀毒软件报毒？**
+
+缓存清理类工具容易被启发式规则误报。可把程序目录加入白名单，或直接下载源码用 `build.bat` 自行编译（编译产物与发布包一致）。
+
+**标题栏显示"受限模式"？**
+
+没有拿到管理员权限：退出后右键程序 →「以管理员身份运行」，或在 UAC 弹窗中选「是」。受限模式下系统缓存、回收站等项目会被跳过。
+
+**定时任务没有执行？**
+
+计划任务默认"仅在用户登录时运行"，到点需要开机且已登录。可在「任务计划程序 → CdCleanerWeeklyClean → 上次运行结果」查看执行状态。
+
+**清理后网站需要重新登录吗？**
+
+不会。程序只删除缓存目录（Cache / Code Cache / GPUCache / Service Worker 缓存），不触碰 Cookies、LocalStorage、书签和保存的密码。
 
 ## 许可证
 
